@@ -9,53 +9,53 @@ const nextConfig: NextConfig = {
 export default withPWA({
   dest: "public",
   disable: process.env.NODE_ENV === "development",
-  register: true,
-  skipWaiting: true,
-  runtimeCaching: [
-    {
-      urlPattern: /^https:\/\/fonts\.(?:gstatic|googleapis)\.com\/.*/i,
-      handler: "CacheFirst",
-      options: {
-        cacheName: "google-fonts",
-        expiration: {
-          maxEntries: 4,
-          maxAgeSeconds: 365 * 24 * 60 * 60, // 1 year
+  workboxOptions: {
+    runtimeCaching: [
+      {
+        urlPattern: /^https:\/\/fonts\.(?:gstatic|googleapis)\.com\/.*/i,
+        handler: "CacheFirst",
+        options: {
+          cacheName: "google-fonts",
+          expiration: {
+            maxEntries: 4,
+            maxAgeSeconds: 365 * 24 * 60 * 60, // 1 year
+          },
         },
       },
-    },
-    {
-      urlPattern: /^https:\/\/api\.github\.com\/.*/i,
-      handler: "NetworkFirst",
-      options: {
-        cacheName: "github-api",
-        networkTimeoutSeconds: 10,
-        expiration: {
-          maxEntries: 50,
-          maxAgeSeconds: 60 * 60, // 1 hour
+      {
+        urlPattern: /^https:\/\/api\.github\.com\/.*/i,
+        handler: "NetworkFirst",
+        options: {
+          cacheName: "github-api",
+          networkTimeoutSeconds: 10,
+          expiration: {
+            maxEntries: 50,
+            maxAgeSeconds: 60 * 60, // 1 hour
+          },
         },
       },
-    },
-    {
-      urlPattern: /\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i,
-      handler: "CacheFirst",
-      options: {
-        cacheName: "static-images",
-        expiration: {
-          maxEntries: 64,
-          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+      {
+        urlPattern: /\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i,
+        handler: "CacheFirst",
+        options: {
+          cacheName: "static-images",
+          expiration: {
+            maxEntries: 64,
+            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+          },
         },
       },
-    },
-    {
-      urlPattern: /\.(?:js|css)$/i,
-      handler: "StaleWhileRevalidate",
-      options: {
-        cacheName: "static-resources",
-        expiration: {
-          maxEntries: 32,
-          maxAgeSeconds: 24 * 60 * 60, // 24 hours
+      {
+        urlPattern: /\.(?:js|css)$/i,
+        handler: "StaleWhileRevalidate",
+        options: {
+          cacheName: "static-resources",
+          expiration: {
+            maxEntries: 32,
+            maxAgeSeconds: 24 * 60 * 60, // 24 hours
+          },
         },
       },
-    },
-  ],
+    ],
+  },
 })(nextConfig);
