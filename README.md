@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GitFrost ❄️
 
-## Getting Started
+A minimalist, high-performance bridge to send issues to your private GitHub repository with a beautiful Nordic-themed UI.
 
-First, run the development server:
+## Features
+
+- 🎨 **Nordic/Frozen Theme** - Beautiful slate-900 background with cyan/blue accents
+- 🔒 **Secure** - Client secret validation and optional URL-based access control
+- ⚡ **Fast** - Built with Next.js 15 and React Server Actions
+- 🎯 **Simple** - Clean, single-purpose interface for issue reporting
+- 🔄 **Real-time Feedback** - Loading states and success/error messages
+
+## Setup
+
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Configure Environment Variables**
+
+   Copy `.env.example` to `.env.local`:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Then edit `.env.local` with your values:
+
+   ```env
+   # Get your token from: https://github.com/settings/tokens
+   # Required scopes: repo (full control of private repositories)
+   GITHUB_TOKEN=ghp_your_personal_access_token
+
+   # Your GitHub username or organization
+   GITHUB_OWNER=your-username
+
+   # The repository name where issues will be created
+   GITHUB_REPO=your-repo-name
+
+   # Secret key that users must provide when submitting
+   CLIENT_SECRET=your-secure-secret-key
+
+   # Optional: Protect the page with URL access token
+   # Users will need to visit: http://localhost:3000?access=your-token
+   ACCESS_TOKEN=optional-url-access-token
+   ```
+
+3. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Access the Application**
+   - If `ACCESS_TOKEN` is set: `http://localhost:3000?access=your-token`
+   - If not set: `http://localhost:3000`
+
+## Usage
+
+1. Fill in the form fields:
+   - **Resumo do problema**: Brief title of the issue
+   - **Explique o que aconteceu**: Detailed description
+   - **Código de acesso**: The `CLIENT_SECRET` from your `.env.local`
+
+2. Click "Enviar problema"
+
+3. The issue will be created in your GitHub repository with the label `gitfrost`
+
+## Security Features
+
+- **Client Secret**: Prevents unauthorized issue creation
+- **URL Access Token** (optional): Restricts page access to authorized users
+- **Environment Variables**: Sensitive data stored securely in `.env.local`
+
+## Tech Stack
+
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **@octokit/rest** - GitHub API integration
+- **React Server Actions** - Secure server-side operations
+
+## Deployment
+
+Deploy to Vercel:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+vercel
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Make sure to add all environment variables in your Vercel project settings.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## License
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+MIT
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Powered by GitFrost** ❄️

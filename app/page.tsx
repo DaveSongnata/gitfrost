@@ -1,65 +1,183 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import { createIssue } from './actions/create-issue';
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState<{
+    type: 'success' | 'error';
+    text: string;
+    issueUrl?: string;
+  } | null>(null);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsLoading(true);
+    setMessage(null);
+
+    const formData = new FormData(event.currentTarget);
+    const result = await createIssue(formData);
+
+    setIsLoading(false);
+
+    if (result.success) {
+      setMessage({
+        type: 'success',
+        text: result.message,
+        issueUrl: result.issueUrl,
+      });
+      // Reset form
+      event.currentTarget.reset();
+    } else {
+      setMessage({
+        type: 'error',
+        text: result.message,
+      });
+    }
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
+      <div className="w-full max-w-2xl">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-3">
+            GitFrost
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-slate-400 text-lg">
+            Reporte problemas de forma simples e rápida
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Form Card */}
+        <div className="bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Title Field */}
+            <div>
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-cyan-400 mb-2"
+              >
+                Resumo do problema
+              </label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                required
+                disabled={isLoading}
+                className="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                placeholder="Digite um resumo claro do problema"
+              />
+            </div>
+
+            {/* Body Field */}
+            <div>
+              <label
+                htmlFor="body"
+                className="block text-sm font-medium text-cyan-400 mb-2"
+              >
+                Explique o que aconteceu
+              </label>
+              <textarea
+                id="body"
+                name="body"
+                required
+                disabled={isLoading}
+                rows={8}
+                className="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+                placeholder="Descreva o problema em detalhes..."
+              />
+            </div>
+
+            {/* Client Secret Field */}
+            <div>
+              <label
+                htmlFor="clientSecret"
+                className="block text-sm font-medium text-cyan-400 mb-2"
+              >
+                Código de acesso
+              </label>
+              <input
+                type="password"
+                id="clientSecret"
+                name="clientSecret"
+                required
+                disabled={isLoading}
+                className="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                placeholder="Digite o código de acesso"
+              />
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-4 px-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
+            >
+              {isLoading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg
+                    className="animate-spin h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Enviando...
+                </span>
+              ) : (
+                'Enviar problema'
+              )}
+            </button>
+          </form>
+
+          {/* Message Display */}
+          {message && (
+            <div
+              className={`mt-6 p-4 rounded-lg border ${
+                message.type === 'success'
+                  ? 'bg-emerald-900/30 border-emerald-500 text-emerald-400'
+                  : 'bg-red-900/30 border-red-500 text-red-400'
+              }`}
+            >
+              <p className="font-medium">{message.text}</p>
+              {message.issueUrl && (
+                <a
+                  href={message.issueUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-400 hover:text-cyan-300 underline mt-2 inline-block"
+                >
+                  Ver issue no GitHub →
+                </a>
+              )}
+            </div>
+          )}
         </div>
-      </main>
-    </div>
+
+        {/* Footer */}
+        <div className="text-center mt-8">
+          <p className="text-slate-500 text-sm">
+            Powered by{' '}
+            <span className="text-cyan-400 font-semibold">GitFrost</span>
+          </p>
+        </div>
+      </div>
+    </main>
   );
 }
