@@ -96,7 +96,7 @@ export default function Home() {
           {/* Link to Issues */}
           <Link href="/issues">
             <Button
-              variant="outline"
+              variant="secondary"
               className="border-2 border-cyan-500/50 hover:border-cyan-400
                          text-cyan-400 hover:text-cyan-300
                          hover:shadow-[0_0_15px_rgba(6,182,212,0.3)]"
