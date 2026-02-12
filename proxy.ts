@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const accessToken = request.nextUrl.searchParams.get('access');
   const expectedToken = process.env.ACCESS_TOKEN;
 
@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// Only run middleware on the home page
+// Only run proxy on the home page
 export const config = {
   matcher: '/',
 };
