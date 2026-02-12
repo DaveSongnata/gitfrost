@@ -1,0 +1,52 @@
+{
+  "name": "GitFrost - Issue Reporter",
+  "short_name": "GitFrost",
+  "description": "Reporte problemas de forma simples e rápida para repositórios GitHub",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#06b6d4",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities", "developer tools"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Nova Issue",
+      "short_name": "Nova Issue",
+      "description": "Criar uma nova issue rapidamente",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/logo.svg",
+          "sizes": "any"
+        }
+      ]
+    }
+  ]
+}

@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/pixelact-ui/button';
 import { Input } from '@/components/ui/pixelact-ui/input';
 import { Textarea } from '@/components/ui/pixelact-ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/pixelact-ui/card';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -66,18 +68,43 @@ export default function Home() {
       <div className="w-full max-w-2xl relative z-10">
         {/* Header with pixel art style */}
         <div className="text-center mb-8">
-          <div className="inline-block mb-4">
-            <h1 className="text-6xl font-bold text-cyan-400 tracking-wider mb-2
-                           drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]
-                           animate-pulse"
+          <div className="flex flex-col items-center gap-4 mb-4">
+            {/* Logo */}
+            <div className="relative w-32 h-32 drop-shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+              <Image
+                src="/logo.svg"
+                alt="GitFrost Logo"
+                width={128}
+                height={128}
+                className="animate-pulse"
+                priority
+              />
+            </div>
+
+            {/* Title */}
+            <h1 className="text-6xl font-bold text-cyan-400 tracking-wider
+                           drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]"
                 style={{ fontFamily: "'Courier New', monospace", textTransform: 'uppercase', letterSpacing: '0.1em' }}>
               ❄️ GITFROST ❄️
             </h1>
           </div>
-          <p className="text-slate-400 text-lg tracking-wide"
+          <p className="text-slate-400 text-lg tracking-wide mb-4"
              style={{ fontFamily: "'Courier New', monospace", textTransform: 'uppercase', letterSpacing: '0.1em' }}>
             &gt; Reporte problemas de forma simples e rápida_
           </p>
+
+          {/* Link to Issues */}
+          <Link href="/issues">
+            <Button
+              variant="outline"
+              className="border-2 border-cyan-500/50 hover:border-cyan-400
+                         text-cyan-400 hover:text-cyan-300
+                         hover:shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+              style={{ fontFamily: "'Courier New', monospace", textTransform: 'uppercase', letterSpacing: '0.1em' }}
+            >
+              📋 VER ISSUES ABERTAS
+            </Button>
+          </Link>
         </div>
 
         {/* Form Card with pixel art styling */}
