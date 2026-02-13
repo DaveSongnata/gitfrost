@@ -21,16 +21,6 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
     title: "GitFrost",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#06b6d4" },
-    { media: "(prefers-color-scheme: dark)", color: "#06b6d4" },
-  ],
   icons: {
     icon: [
       { url: "/logo.svg", type: "image/svg+xml" },
@@ -41,6 +31,17 @@ export const metadata: Metadata = {
       { url: "/logo.svg", type: "image/svg+xml" },
     ],
   },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#06b6d4" },
+    { media: "(prefers-color-scheme: dark)", color: "#06b6d4" },
+  ],
 };
 
 export default function RootLayout({
